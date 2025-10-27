@@ -1,0 +1,58 @@
+package yes;
+
+import java.util.Scanner;
+import java.util.Arrays;
+
+public class Otom {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Ask for number of elements
+        System.out.print("Enter the number of elements: ");
+        int n = scanner.nextInt();
+
+        // Create an array of size n
+        int[] x = new int[n];
+    
+        // Input n integers
+        System.out.println("Enter " + n + " integers:");
+        for (int i = 0; i < n; i++) {
+            x[i] = scanner.nextInt();
+        }
+
+        // Display the entered array
+        System.out.println("You entered: " + Arrays.toString(x));
+
+        int choice;
+
+        // Menu loop
+        do {
+            System.out.println("\nMenu:");
+            System.out.println("1. Print array");
+            System.out.println("2. Sort array");
+            System.out.println("3. Exit");
+            System.out.print("Enter your choice: ");
+            choice = scanner.nextInt();
+
+            switch (choice) {
+                case 1:
+                    System.out.println("Array: " + Arrays.toString(x));
+                    break;
+
+                case 2:
+                    Arrays.sort(x);
+                    System.out.println("Sorted array: " + Arrays.toString(x));
+                    break;
+
+                case 3:
+                    System.out.println("Exiting...");
+                    break;
+
+                default:
+                    System.out.println("Invalid choice, try again.");
+            }
+        } while (choice != 3);
+
+        scanner.close();
+    }
+}

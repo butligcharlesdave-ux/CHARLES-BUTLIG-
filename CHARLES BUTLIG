@@ -1,0 +1,78 @@
+
+import java.util.Scanner;
+
+public class LastnameFirstname {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        final double BASE_PRICE = 200.0;
+
+        while (true) {
+            System.out.print("\nEnter customer name (or type 'exit' to quit): ");
+            String name = sc.nextLine().trim();
+
+            if (name.equalsIgnoreCase("exit")) {
+                System.out.println("Exiting system... Goodbye!");
+                break;
+            }
+
+            System.out.print("Enter age of the customer: ");
+            int age = Integer.parseInt(sc.nextLine());
+
+            System.out.print("Enter day of the week: ");
+            String day = sc.nextLine().trim();
+
+            System.out.print("Enter number of tickets: ");
+            int numTickets = Integer.parseInt(sc.nextLine());
+
+            double ticketPrice = BASE_PRICE;
+            String discountApplied = "None";
+
+            // --- Age-based and Day-based Discounts ---
+            if (age < 7) {
+                ticketPrice = 0;
+                discountApplied = "Free (Below 7 years old)";
+            } else if (age >= 60) {
+                double seniorPrice = BASE_PRICE * 0.8; // 20% off
+                double wednesdayPrice = day.equalsIgnoreCase("Wednesday") ? BASE_PRICE * 0.5 : BASE_PRICE;
+
+                // Pick the better discount
+                if (seniorPrice < wednesdayPrice) {
+                    ticketPrice = seniorPrice;
+                    discountApplied = "20% Senior Discount";
+                } else if (day.equalsIgnoreCase("Wednesday")) {
+                    ticketPrice = wednesdayPrice;
+                    discountApplied = "50% Wednesday Discount";
+                }
+            } else if (day.equalsIgnoreCase("Wednesday")) {
+                ticketPrice = BASE_PRICE * 0.5;
+                discountApplied = "50% Wednesday Discount";
+            }
+
+            // --- Compute Total ---
+            double total = ticketPrice * numTickets;
+
+            // --- Bulk Discount ---
+            if (total > 1000) {
+                double discounted = total * 0.9;
+                discountApplied += " + Extra 10% (Over ₱1000)";
+                total = discounted;
+            }
+
+            // --- Display Summary ---
+            
+            System.out.println("       TICKET SUMMARY");
+            System.out.println("==============================");
+            System.out.println("Customer: " + name);
+            System.out.printf("Tickets : %d × ₱%.2f%n", numTickets, ticketPrice);
+            System.out.println("Discount Applied: " + discountApplied);
+            System.out.printf("Final Amount: ₱%.2f%n", total);
+
+            if (total < 200) {
+                System.out.println("Note: Minimum purchase not reached.");
+            }
+           
+        }
+
+        sc.close();
+    }
+}
